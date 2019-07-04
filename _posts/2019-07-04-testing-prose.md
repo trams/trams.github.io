@@ -1,5 +1,7 @@
 ---
-published: false
+layout: post
+title: Using prose.io for the first time
+published: true
 ---
 ## Should I use an online editor?
 
