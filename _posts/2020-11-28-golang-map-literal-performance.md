@@ -4,17 +4,17 @@ title: Go map literal performance
 published: true
 ---
 
-## Go Map Literals performance
+### Go Map Literals performance
 
 During recent go code benchmarking I noticed that function which returns
 a map literal
 
-```
-    ...
+```go
+    // some code above
     return map[string]float {
         "key1": SOME_COMPUTED_ABOVE_VALUE,
         "key2": SOME_COMPUTED_ABOVE_VALUE,
-        ...
+        // more keys here
         "keyN": SOME_COMPUTED_ABOVE_VALUE,
     }
 ```
@@ -24,12 +24,12 @@ I actually expected none cause the size of the map known as a compile time.
 
 So I changed the code above to
 
-```
-    ...
+```go
+    // some code above
     result := make(map[string]float, SIZE) // SIZE >= N
     result["key1"] = SOME_COMPUTED_ABOVE_VALUE
     result["key2"] = SOME_COMPUTED_ABOVE_VALUE
-    ...
+    // more keys here
     result["keyN"] = SOME_COMPUTED_ABOVE_VALUE
     return result
 ```
@@ -40,7 +40,7 @@ To confirm the issue I developed a set of [benchmarks](https://github.com/trams/
 
 
 | Map size | Map literal perf | Map make perf |
-| ---- | ---- | ---- |
+|-------|--------|---------|
 | 5 | 235 ns/op | 240 ns/op |
 | 9 | 716 ns/op | 453 ns/op |
 | 65 | 7346 ns/op | 3401 ns/op |
